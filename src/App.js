@@ -72,6 +72,13 @@ function App() {
     });
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey && !isLoading) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
+
   return (
     <div className="flex flex-col h-screen bg-gray-100">
       <header className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-6 px-4 shadow-md">
@@ -114,13 +121,13 @@ function App() {
       </main>
       <footer className="bg-white border-t border-gray-200 p-4 shadow-inner">
         <div className="max-w-3xl mx-auto flex">
-          <input
-            type="text"
+          <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && !isLoading && sendMessage()}
-            className="flex-grow mr-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-            placeholder="Type your message..."
+            onKeyDown={handleKeyDown}
+            className="flex-grow mr-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm resize-none"
+            placeholder="Type your message... (Shift+Enter for new line)"
+            rows="3"
             disabled={isLoading}
           />
           <button
